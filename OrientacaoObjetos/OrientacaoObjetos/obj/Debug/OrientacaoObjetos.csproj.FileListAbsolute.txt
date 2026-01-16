@@ -1,0 +1,7 @@
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\bin\Debug\OrientacaoObjetos.exe.config
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\bin\Debug\OrientacaoObjetos.exe
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\bin\Debug\OrientacaoObjetos.pdb
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\obj\Debug\OrientacaoObjetos.csprojAssemblyReference.cache
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\obj\Debug\OrientacaoObjetos.csproj.CoreCompileInputs.cache
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\obj\Debug\OrientacaoObjetos.exe
+c:\users\b43786\source\repos\OrientacaoObjetos\OrientacaoObjetos\obj\Debug\OrientacaoObjetos.pdb

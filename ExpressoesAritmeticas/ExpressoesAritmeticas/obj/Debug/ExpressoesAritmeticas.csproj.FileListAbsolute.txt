@@ -1,0 +1,7 @@
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\bin\Debug\ExpressoesAritmeticas.exe.config
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\bin\Debug\ExpressoesAritmeticas.exe
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\bin\Debug\ExpressoesAritmeticas.pdb
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\obj\Debug\ExpressoesAritmeticas.csprojAssemblyReference.cache
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\obj\Debug\ExpressoesAritmeticas.csproj.CoreCompileInputs.cache
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\obj\Debug\ExpressoesAritmeticas.exe
+c:\users\b43786\source\repos\ExpressoesAritmeticas\ExpressoesAritmeticas\obj\Debug\ExpressoesAritmeticas.pdb
