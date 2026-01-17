@@ -8,9 +8,17 @@ namespace OrientacaoObjetos.Fretes
 {
     public abstract class Frete
     {
-        protected int _numeroPedido;
-        protected double _peso;
+        private static int contadorPedidos = 20000;
 
-        public abstract double CalcularFrete();
+        public int NumPedido { get;}
+        public decimal Peso { get; }
+
+        public Frete(decimal peso)
+        {
+            NumPedido = contadorPedidos++;
+            Peso = peso;
+        }
+
+        public abstract decimal CalcularFrete();
     }
 }

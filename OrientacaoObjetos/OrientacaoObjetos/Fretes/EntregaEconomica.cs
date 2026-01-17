@@ -8,17 +8,12 @@ namespace OrientacaoObjetos.Fretes
 {
     class EntregaEconomica : Frete
     {
-        public double Peso;
-        public double Preco;
+        public EntregaEconomica(decimal peso) : base(peso)
+        { }
 
-        public EntregaEconomica(double peso)
+        public override decimal CalcularFrete()
         {
-            Peso = peso;    
-        }
-
-        public override double CalcularFrete()
-        {
-            return Peso * 5.00;
+            return Peso * 5m;
         }
     }
 }
