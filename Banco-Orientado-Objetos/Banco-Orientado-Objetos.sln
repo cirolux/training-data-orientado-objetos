@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 15 for Windows Desktop
+VisualStudioVersion = 15.0.34829.251
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banco-Orientado-Objetos", "Banco-Orientado-Objetos\Banco-Orientado-Objetos.csproj", "{4EF979BF-1777-4770-A9C8-E3470A25E9BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EF979BF-1777-4770-A9C8-E3470A25E9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF979BF-1777-4770-A9C8-E3470A25E9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF979BF-1777-4770-A9C8-E3470A25E9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF979BF-1777-4770-A9C8-E3470A25E9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD5EBA02-61A8-4467-A8CE-11F2BEAAF063}
+	EndGlobalSection
+EndGlobal
