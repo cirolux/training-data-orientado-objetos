@@ -8,44 +8,27 @@ namespace Banco_Orientado_Objetos
 {
     class Cliente
     {
-        static Dictionary<string, string> Nomes = new Dictionary<string, string>(); // Chave: CPF, Valor: Nome
-        static Dictionary<string, List<int>> Contas = new Dictionary<string, List<int>>(); // Chave: CPF, Valor: Lista de números de contas
+        public string CPF { get; }
+        public string Nome { get; }
 
-        public static void Cadastrar(string cpf, string nome)
+        List<ContaBancaria> _contasBancarias;
+
+        public Cliente(string nome, string cpf)
         {
-            Nomes.Add(cpf, nome);
+            Nome = nome;
+            CPF = cpf;
 
-            Contas.Add(cpf, new List<int>());
+            _contasBancarias = new List<ContaBancaria>();
         }
 
-        public static bool Cadastrado(string cpf)
+        public List<ContaBancaria> ObtemConta(int numero)
         {
-            return Nomes.ContainsKey(cpf);
+            return _contasBancarias;
         }
 
-        public static void CadastrarNovaContaBancaria(string cpf, int numeroConta)
+        public int NumeroConta(int numero)
         {
-            Contas[cpf].Add(numeroConta);
-        }
-
-        public static string ObterNome(string cpf)
-        {
-            return Nomes[cpf];
-        }
-
-        public static int ObterQuantidadeClientesCadastrados()
-        {
-            return Nomes.Count;
-        }
-
-        public static List<string> ObterCpfsClientesCadastrados()
-        {
-            return new List<string>(Nomes.Keys);
-        }
-
-        public static List<int> ObterContas(string cpf)
-        {
-            return Contas[cpf];
+            return numero++;
         }
     }
 }

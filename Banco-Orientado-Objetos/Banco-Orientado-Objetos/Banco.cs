@@ -8,341 +8,100 @@ namespace Banco_Orientado_Objetos
 {
     class Banco
     {
-        static int NumeroConta = 1;
+        private int _numeroConta = 1;
 
-        public static void CadastrarNovoCliente()
+        Dictionary<int, string> _contaCpf;
+        List<Cliente> _listaClientes;
+
+        public Banco()
         {
-            Console.WriteLine("\nDigite o CPF do cliente (ou 'S' para sair):");
-            string inputCPF = Console.ReadLine();
-
-            if (inputCPF.ToUpper() == "S")
-                return;
-
-            if (Cliente.Cadastrado(inputCPF))
-            {
-                Console.WriteLine("Cliente com esse CPF já está cadastrado.");
-
-                return;
-            }
-
-            Console.WriteLine($"Digite o nome do cliente (ou 'S' para sair):");
-            string inputNome = Console.ReadLine();
-
-            if (inputNome.ToUpper() == "S")
-                return;
-
-            Cliente.Cadastrar(inputCPF, inputNome);
-
-            Console.WriteLine($"Cliente '{Cliente.ObterNome(inputCPF)}' cadastrado com sucesso!");
+            _listaClientes = new List<Cliente>();
+            _contaCpf = new Dictionary<int, string>();
         }
 
-        public static void CadastrarNovaContaBancaria()
+        public List<Cliente> ObtemListaCliente()
         {
-            Console.WriteLine("\nDigite o CPF do cliente (ou 'S' para sair):");
-            string inputCPF = Console.ReadLine();
-
-            if (inputCPF.ToUpper() == "S")
-                return;
-
-            if (!Cliente.Cadastrado(inputCPF))
-            {
-                Console.WriteLine("Cliente não encontrado.");
-
-                return;
-            }
-
-            Console.WriteLine("Digite o número respectivo ao tipo de conta, sendo 1 para 'Poupança' e 2 para 'Corrente' (ou 'S' para sair):");
-            string inputTipo = Console.ReadLine();
-
-            if (inputTipo.ToUpper() == "S")
-                return;
-
-            if (!int.TryParse(inputTipo, out int tipo))
-            {
-                Console.WriteLine("Tipo de conta inválido.");
-
-                return;
-            }
-
-            if (!ContaBancaria.TipoValido(tipo))
-            {
-                Console.WriteLine("Tipo de conta inválido.");
-
-                return;
-            }
-
-            Console.WriteLine("Digite o saldo inicial (R$):");
-            string inputSaldo = Console.ReadLine();
-
-            if (!double.TryParse(inputSaldo, out double saldo))
-            {
-                Console.WriteLine("Saldo inválido. Conta iniciará com saldo R$ 0,00.");
-
-                saldo = 0;
-            }
-
-            ContaBancaria.Cadastrar(NumeroConta, inputCPF, tipo, saldo);
-
-            Console.WriteLine($"Conta {NumeroConta} criada para o cliente {Cliente.ObterNome(inputCPF)} com sucesso! Saldo de {ContaBancaria.ObterSaldo(NumeroConta)}.");
-
-            NumeroConta++;
+            return _listaClientes;
         }
 
-        public static void ListarClientesEContasBancarias()
+        public Cliente ObtemCliente(string cpf)
         {
-            if (Cliente.ObterQuantidadeClientesCadastrados() == 0)
+            for (int i = 0; i < _listaClientes.Count; i++)
             {
-                Console.WriteLine("Não há clientes cadastrados.");
-
-                return;
-            }
-
-            Console.WriteLine("\nLista de clientes:");
-
-            List<string> cpfs = Cliente.ObterCpfsClientesCadastrados();
-            for (int i = 0; i < cpfs.Count; i++)
-            {
-                string cpf = cpfs[i];
-
-                Console.WriteLine($"\n{Cliente.ObterNome(cpf)} ({cpf}):");
-
-                List<int> contas = Cliente.ObterContas(cpf);
-
-                if (contas.Count == 0)
+                if (_listaClientes[i].CPF == cpf)
                 {
-                    Console.WriteLine($">>> Nenhuma conta cadastrada.");
-
-                    continue;
-                }
-
-                for (int j = 0; j < contas.Count; j++)
-                {
-                    int numeroConta = contas[j];
-
-                    Console.WriteLine($">>> Conta {ContaBancaria.ObterTipo(numeroConta).ToLower()} número {numeroConta}: {ContaBancaria.ObterSaldo(numeroConta)}.");
+                    return _listaClientes[i];
                 }
             }
+            return null;
         }
 
-        public static void ConsultarSaldoContaBancaria()
+        public bool ClientesNoCadastro(string cpf)
         {
-            Console.WriteLine("\nDigite o número da conta (ou 'S' para sair):");
-            string inputNumeroConta = Console.ReadLine();
-
-            if (inputNumeroConta.ToUpper() == "S")
-                return;
-
-            if (!int.TryParse(inputNumeroConta, out int numeroConta))
-            {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
-            }
-
-            if (!ContaBancaria.Cadastrada(numeroConta))
-            {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
-            }
-
-            Console.WriteLine($"Saldo da conta número {numeroConta}: {ContaBancaria.ObterSaldo(numeroConta)}.");
-
-            // Um desafio adicional pra instigar caso haja tempo para tal: E se precisar descobrir o cliente dono da conta pra imprimir junto na mensagem?
-
-            /*
-             *   string cpfDono = null;
-             *
-             *   List<string> cpfs = Cliente.ObterCpfsClientesCadastrados();
-             *
-             *   for (int i = 0; i < cpfs.Count; i++) // Percorre linearmente todos os CPFs e respectivas contas até achar (ou não) - Algoritmo O(n)
-             *   {
-             *       string cpf = cpfs[i];
-             *       
-             *       List<int> contas = Cliente.ObterContas(cpf);
-             *
-             *       for (int j = 0; j < contas.Count; j++)
-             *       {
-             *           if (contas[j] == numeroConta)
-             *           {
-             *               cpfDono = cpf;
-             *
-             *               break;
-             *           }
-             *       }
-             *       
-             *       if (cpfDono != null)
-             *           break;
-             *   }
-            */
+            return _contaCpf.ContainsValue(cpf);
         }
 
-        public static void RealizarDepositoContaBancaria()
+        public void CadastrarCliente()
         {
-            Console.WriteLine("\nDigite o número da conta (ou 'S' para sair):");
-            string inputNumeroConta = Console.ReadLine();
+            Console.WriteLine("Digite o nome do cliente para cadastrá-lo");
+            string eNome = Console.ReadLine();
 
-            if (inputNumeroConta.ToUpper() == "S")
-                return;
+            Console.WriteLine("Agora o CPF");
+            string eCpf = Console.ReadLine();
 
-            if (!int.TryParse(inputNumeroConta, out int numeroConta))
+            if (this.ClientesNoCadastro(eCpf))
             {
-                Console.WriteLine("Conta não encontrada.");
+                Console.WriteLine("Cliente já cadastrado");
 
                 return;
             }
 
-            if (!ContaBancaria.Cadastrada(numeroConta))
-            {
-                Console.WriteLine("Conta não encontrada.");
+            Cliente novoC = new Cliente(eNome, eCpf);
 
-                return;
-            }
+            _listaClientes.Add(novoC);
 
-            Console.WriteLine("Digite o valor do depósito (R$):");
-            string inputDeposito = Console.ReadLine();
-
-            if (!double.TryParse(inputDeposito, out double deposito))
-            {
-                Console.WriteLine("Valor inválido.");
-
-                return;
-            }
-
-            if (deposito <= 0)
-            {
-                Console.WriteLine("Valor inválido.");
-
-                return;
-            }
-
-            ContaBancaria.Depositar(numeroConta, deposito);
-
-            Console.WriteLine($"Depósito de R$ {deposito:F2} realizado com sucesso na conta {numeroConta}! Saldo de {ContaBancaria.ObterSaldo(numeroConta)}.");
+            Console.WriteLine($"Cliente {novoC} cadastrado com sucesso");
         }
 
-        public static void RealizarSaqueContaBancaria()
+        public ContaBancaria ObterConta(int numero)
         {
-            Console.WriteLine("\nDigite o número da conta (ou 'S' para sair):");
-            string inputNumeroConta = Console.ReadLine();
-
-            if (inputNumeroConta.ToUpper() == "S")
-                return;
-
-            if (!int.TryParse(inputNumeroConta, out int numeroConta))
-            {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
-            }
-
-            if (!ContaBancaria.Cadastrada(numeroConta))
-            {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
-            }
-
-            Console.WriteLine("Digite o valor do saque (R$):");
-            string inputSaque = Console.ReadLine();
-
-            if (!double.TryParse(inputSaque, out double saque))
-            {
-                Console.WriteLine("Valor inválido.");
-
-                return;
-            }
-
-            if (saque <= 0)
-            {
-                Console.WriteLine("Valor inválido.");
-
-                return;
-            }
-
-            bool saqueBemSucedido = ContaBancaria.Sacar(numeroConta, saque);
-
-            if (!saqueBemSucedido)
-            {
-                Console.WriteLine($"Saque de R$ {saque:F2} NÃO foi realizado devido a saldo insuficiente na conta {numeroConta}! Saldo de {ContaBancaria.ObterSaldo(numeroConta)}.");
-
-                return;
-            }
-
-            Console.WriteLine($"Saque de R$ {saque:F2} realizado com sucesso na conta {numeroConta}! Saldo de {ContaBancaria.ObterSaldo(numeroConta)}.");
+            Cliente cliente = ObtemCliente(_contaCpf[_numeroConta]);
+            return cliente.ObtemConta(numero);
         }
 
-        public static void RealizarTransferenciaContasBancarias()
+        public bool ContaCadastrada(int numero)
         {
-            Console.WriteLine("\nDigite o número da conta originária (ou 'S' para sair):");
-            string inputNumeroContaOriginaria = Console.ReadLine();
+            return _contaCpf.ContainsKey(_numeroConta);
+        }
 
-            if (inputNumeroContaOriginaria.ToUpper() == "S")
-                return;
+        public void CadastrarConta()
+        {
+            Console.WriteLine("Digite o CPF do cliente para criar uma conta");
+            string eCpf = Console.ReadLine();
 
-            if (!int.TryParse(inputNumeroContaOriginaria, out int numeroContaOriginaria))
+            Cliente cliente = ObtemCliente(eCpf);
+
+            if (cliente == null)
             {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
+                Console.WriteLine("Cliente não encontrado");
             }
 
-            if (!ContaBancaria.Cadastrada(numeroContaOriginaria))
-            {
-                Console.WriteLine("Conta não encontrada.");
+            Console.WriteLine("Digite o tipo da conta 1 corrente 2 poupança: ");
+            int tipoConta = int.Parse(Console.ReadLine());
 
-                return;
+            Console.WriteLine("Digite o saldo inicial: ");
+            decimal saldoIni = decimal.Parse(Console.ReadLine());
+
+            if (tipoConta == 1)
+            {
+                ContaCorrente contaCorrente = new ContaCorrente(_numeroConta, saldoIni);
+            }
+            else if (tipoConta == 2)
+            {
+                ContaPoupanca contaPoupanca = new ContaPoupanca(_numeroConta, saldoIni);
             }
 
-            Console.WriteLine("\nDigite o número da conta destinatária (ou 'S' para sair):");
-            string inputNumeroContaDestinataria = Console.ReadLine();
-
-            if (inputNumeroContaDestinataria.ToUpper() == "S")
-                return;
-
-            if (!int.TryParse(inputNumeroContaDestinataria, out int numeroContaDestinataria))
-            {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
-            }
-
-            if (!ContaBancaria.Cadastrada(numeroContaDestinataria))
-            {
-                Console.WriteLine("Conta não encontrada.");
-
-                return;
-            }
-
-            Console.WriteLine("Digite o valor da transferência (R$):");
-            string inputTransferencia = Console.ReadLine();
-
-            if (!double.TryParse(inputTransferencia, out double transferencia))
-            {
-                Console.WriteLine("Valor inválido.");
-
-                return;
-            }
-
-            if (transferencia <= 0)
-            {
-                Console.WriteLine("Valor inválido.");
-
-                return;
-            }
-
-            bool saqueBemSucedido = ContaBancaria.Sacar(numeroContaOriginaria, transferencia);
-
-            if (!saqueBemSucedido)
-            {
-                Console.WriteLine($"Transferência de R$ {transferencia:F2} NÃO foi realizada devido a saldo insuficiente na conta originária {numeroContaOriginaria}! Saldo de {ContaBancaria.ObterSaldo(numeroContaOriginaria)}.");
-
-                return;
-            }
-
-            ContaBancaria.Depositar(numeroContaDestinataria, transferencia);
-
-            Console.WriteLine($"Transferência de R$ {transferencia:F2} realizada com sucesso da conta originária {numeroContaOriginaria} para a conta destinatária {numeroContaDestinataria}!");
+            _contaCpf.Add(_numeroConta, eCpf);
         }
     }
 }

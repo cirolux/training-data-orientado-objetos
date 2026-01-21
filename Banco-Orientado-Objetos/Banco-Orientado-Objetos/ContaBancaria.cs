@@ -6,57 +6,35 @@ using System.Threading.Tasks;
 
 namespace Banco_Orientado_Objetos
 {
-    class ContaBancaria
+    public abstract class ContaBancaria
     {
-        const string TIPO_CONTA_POUPANCA = "Poupança", TIPO_CONTA_CORRENTE = "Corrente";
+        public abstract int TipoConta { get; }
+        public abstract string Descricao { get; }
+        private decimal _saldo;
+        public string Saldo => $"R${_saldo:F2}";
 
-        static Dictionary<int, int> Tipos = new Dictionary<int, int>(); // Chave: Número da conta, Valor: ID do Tipo (1 - Poupança, 2 - Corrente)
-        static Dictionary<int, double> Saldos = new Dictionary<int, double>(); // Chave: Número da conta, Valor: Saldo
+        public int Numero {  get; }
 
-        public static void Cadastrar(int numeroConta, string cpf, int tipo, double saldo)
+        protected ContaBancaria(int numero, decimal saldoInicial)
         {
-            Tipos.Add(numeroConta, tipo);
-
-            Saldos.Add(numeroConta, saldo);
-
-            Cliente.CadastrarNovaContaBancaria(cpf, numeroConta);
+            Numero = numero;
+            _saldo = saldoInicial;
         }
 
-        public static string ObterTipo(int numeroConta)
+        public bool Sacar(decimal saldo, decimal valor)
         {
-            int idTipoConta = Tipos[numeroConta];
-
-            return idTipoConta == 1 ? TIPO_CONTA_POUPANCA : TIPO_CONTA_CORRENTE;
-        }
-
-        public static string ObterSaldo(int numeroConta)
-        {
-            return $"R$ {Saldos[numeroConta]:F2}";
-        }
-
-        public static bool TipoValido(int tipo)
-        {
-            return tipo > 0 && tipo < 3;
-        }
-
-        public static bool Cadastrada(int numeroConta)
-        {
-            return Saldos.ContainsKey(numeroConta);
-        }
-
-        public static void Depositar(int numeroConta, double valor)
-        {
-            Saldos[numeroConta] += valor;
-        }
-
-        public static bool Sacar(int numeroConta, double valor)
-        {
-            if (Saldos[numeroConta] < valor)
-                return false;
-
-            Saldos[numeroConta] -= valor;
+            if (valor < _saldo)
+            {
+                Console.WriteLine("Saldo Insuficiente");
+            }
+            _saldo -= valor;
 
             return true;
+        }
+
+        public void Depositar(decimal _saldo, decimal valor)
+        {
+            _saldo += valor;
         }
     }
 }
